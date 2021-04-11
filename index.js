@@ -29,9 +29,10 @@ client.on('message', async message => {
     console.log("Drip");
     execute(message, serverQueue);
   }
-  else if (message.content.startsWith(`${prefix}stop`)) {
+  else if (message.content.startsWith(`${prefix}stop`) || message.content.startsWith("😩")) {
     stop(message, serverQueue);
   }
+  console.log(message.content);
 });
 
 function stop(message, serverQueue) {
@@ -39,7 +40,7 @@ function stop(message, serverQueue) {
     return message.channel.send("No hay ninguna canción");
 
   serverQueue.songs = [];
-  if (serverQueue.connection.dispatcher) serverQueue.connection.dispatcher.end();
+  if (serverQueue.connection) serverQueue.connection.dispatcher.end();
 }
 
 async function execute(message, serverQueue) {
