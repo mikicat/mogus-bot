@@ -27,7 +27,11 @@ client.on('message', async message => {
 
   if (message.content.startsWith("<:drip:")) {
     console.log("Drip");
-    execute(message, serverQueue);
+    execute(message, serverQueue, 0);
+  }
+  else if (message.content.startsWith("<:garota:")) {
+    console.log("Garota");
+    execute(message, serverQueue, 1);
   }
   else if (message.content.startsWith(`${prefix}stop`) || message.content.startsWith("😩")) {
     stop(message, serverQueue);
@@ -43,7 +47,7 @@ function stop(message, serverQueue) {
   if (serverQueue.connection) serverQueue.connection.dispatcher.end();
 }
 
-async function execute(message, serverQueue) {
+async function execute(message, serverQueue, opcio) {
   const voiceChannel = message.member.voice.channel;
   if (!voiceChannel) return;
   const permissions = voiceChannel.permissionsFor(message.client.user);
@@ -52,8 +56,9 @@ async function execute(message, serverQueue) {
       "No tengo permisos para entrar o hablar en tu canal de voz :("
     );
   }
-
-  const songInfo = await ytdl.getInfo("https://www.youtube.com/watch?v=grd-K33tOSM");
+  let songInfo;
+  if (opcio == 0) songInfo = await ytdl.getInfo("https://www.youtube.com/watch?v=grd-K33tOSM");
+  else songInfo = await ytdl.getInfo("https://www.youtube.com/watch?v=bl6x1m54yIM");
   const song = {
     title: songInfo.videoDetails.title,
     url: songInfo.videoDetails.video_url,
@@ -96,8 +101,6 @@ async function execute(message, serverQueue) {
       }
     }
   }
-
-
 }
 
 
