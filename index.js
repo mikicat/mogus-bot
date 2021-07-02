@@ -62,17 +62,19 @@ async function execute(message, serverQueue, opcio) {
     );
   }
   let songInfo;
+  let url;
   switch (opcio) {
       case 0:
-          songInfo = await ytdl.getInfo("https://www.youtube.com/watch?v=grd-K33tOSM");
+          url = "https://www.youtube.com/watch?v=grd-K33tOSM";
           break;
       case 1:
-          songInfo = await ytdl.getInfo("https://www.youtube.com/watch?v=bl6x1m54yIM");
+          url = "https://www.youtube.com/watch?v=bl6x1m54yIM";
           break;
       default:
-          songInfo = await ytdl.getInfo("https://www.youtube.com/watch?v=m-VUAUglqnU");
+          url = "https://www.youtube.com/watch?v=m-VUAUglqnU";
           break;
   }
+  songInfo = await ytdl.getInfo(url);
   const song = {
     title: songInfo.videoDetails.title,
     url: songInfo.videoDetails.video_url,
