@@ -25,6 +25,7 @@ client.on('message', async message => {
   const serverQueue = queue.get(message.guild.id);
 
 
+  console.log(message.content);
   if (message.content.startsWith("<:drip:")) {
     console.log("Drip");
     execute(message, serverQueue, 0);
@@ -33,10 +34,14 @@ client.on('message', async message => {
     console.log("Garota");
     execute(message, serverQueue, 1);
   }
+  else if (message.content.startsWith("<:hamburger:") || message.content.startsWith("🍔")) {
+    console.log("Obama hamburger sussy balls");
+    execute(message, serverQueue, 2);
+  }
   else if (message.content.startsWith(`${prefix}stop`) || message.content.startsWith("😩")) {
     stop(message, serverQueue);
   }
-  console.log(message.content);
+  //console.log(message.content);
 });
 
 function stop(message, serverQueue) {
@@ -57,8 +62,17 @@ async function execute(message, serverQueue, opcio) {
     );
   }
   let songInfo;
-  if (opcio == 0) songInfo = await ytdl.getInfo("https://www.youtube.com/watch?v=grd-K33tOSM");
-  else songInfo = await ytdl.getInfo("https://www.youtube.com/watch?v=bl6x1m54yIM");
+  switch (opcio) {
+      case 0:
+          songInfo = await ytdl.getInfo("https://www.youtube.com/watch?v=grd-K33tOSM");
+          break;
+      case 1:
+          songInfo = await ytdl.getInfo("https://www.youtube.com/watch?v=bl6x1m54yIM");
+          break;
+      default:
+          songInfo = await ytdl.getInfo("https://www.youtube.com/watch?v=m-VUAUglqnU");
+          break;
+  }
   const song = {
     title: songInfo.videoDetails.title,
     url: songInfo.videoDetails.video_url,
