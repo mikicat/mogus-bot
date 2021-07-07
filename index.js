@@ -26,7 +26,7 @@ client.on('message', async message => {
 
 
   console.log(message.content);
-  if (message.content.startsWith("<:drip:")) {
+  if (message.content.startsWith("<:drip:") || message.content.startsWith("<:astronaut:")) {
     console.log("Drip");
     execute(message, serverQueue, 0);
   }
